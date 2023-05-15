@@ -1,49 +1,23 @@
 import './style.css'
 import * as THREE from 'three'
-
-//canvas
-const canvas = document.querySelector("canvas.webgl")
-//scene
-const scene = new THREE.Scene()
-/**
- * Axis helper
- *  
- */ 
-const axisHelper = new THREE.AxesHelper(2)
-scene.add(axisHelper)
+import gsap from 'gsap'
 
 /**
- * object group
+ * Base
  */
-const group = new THREE.Group()
-group.scale.y = 2;
-group.rotation.y = 0.5
-scene.add(group)
+// Canvas
+const canvas = document.querySelector('canvas.webgl')
 
-const cube1 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 0xff0000})
-)
-cube1.position.x = - 1.5
-group.add(cube1)
-const cube2 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 0x00ff00})
-)
-cube2.position.x =  1.5
-group.add(cube2)
-const cube3 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 0x0000ff})
-)
-cube3.position.x = - 0
-group.add(cube3)
-const cube4 = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshBasicMaterial({color: 0xf000f0})
-)
-cube4.position.y = - 1.5
-group.add(cube4)
+// Scene
+const scene = new THREE.Scene()
+
+/**
+ * Base
+ */
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
 
 /**
  * Sizes
@@ -57,9 +31,7 @@ const sizes = {
  * Camera
  */
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 10
-
-// camera.lookAt(new THREE.Vector3(0, - 1, 0))
+camera.position.z = 3
 scene.add(camera)
 
 /**
@@ -68,5 +40,68 @@ scene.add(camera)
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
-renderer.setSize(sizes.width , sizes.height)
-renderer.render(scene, camera)
+renderer.setSize(sizes.width, sizes.height)
+
+/**
+ * Animate
+ */
+//---------------
+// let time =Date.now()
+
+// const tick = () =>
+// {
+//     //time
+//     const currentTime = =Date.now()
+//     const deltaTime = currentTime - time
+//     time = currentTime
+
+//     //update object
+//     mesh.rotation.y += 002 * deltaTime
+//     // Render
+//     renderer.render(scene, camera)
+
+//     // Call tick again on the next frame
+//     window.requestAnimationFrame(tick)
+// }
+
+// tick()
+//-------------
+// const clock = new THREE.Clock()
+
+// const tick = () =>
+// {
+//     const elapsTime = clock.getElapsedTime();
+
+//     //ogject update
+//     // mesh.position.y = elapsTime * Math.PI * 2 // half rotation on each second
+
+//     mesh.position.y = Math.sin(elapsTime)
+//     mesh.position.y = Math.cos(elapsTime)
+
+//     camera.position.y = Math.cos(elapsTime)
+//     camera.position.y = Math.sin(elapsTime)
+//     camera.lookAt(mesh.position)
+//     // Render
+//     renderer.render(scene, camera)
+
+//     // Call tick again on the next frame
+//     window.requestAnimationFrame(tick)
+// }
+
+// tick()
+//--------------
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
+gsap.to(mesh.position, { duration: 1, delay: 1, y:1 })
+gsap.to(mesh.position, { duration: 1, delay: 1, x: -2 })
+//gsap.to(mesh.position, { duration: 1, delay: 1, y: -1 })
+
+const tick = () =>
+{
+    // Render
+    renderer.render(scene, camera)
+
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+}
+
+tick()

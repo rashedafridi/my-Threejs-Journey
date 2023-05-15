@@ -17,4 +17,6 @@ npm run dev
 npm run build
 ```
 
-## learned about position, rotation ,scale, group, axisHelper
+## learned about window.requestAnimationFrame
+
+different way of managing frame rate like using Date.Now(), THREE.Clock() and gsap animation library
