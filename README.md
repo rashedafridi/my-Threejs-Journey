@@ -16,3 +16,5 @@ npm run dev
 # Build for production in the dist/ directory
 npm run build
 ```
+
+## learned about position, rotation ,scale, group, axisHelper

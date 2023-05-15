@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+# Optional npm cache directory
+.npm
+
+# dotenv environment variables file
+.env
+
+# Ignore dist folder with webpack build output
+dist/
+
+certs/
+
+.DS_Store
+.vscode/
