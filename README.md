@@ -1,11 +1,17 @@
-# here we are gona creatt a basic three js scene with cdn  
-we created a basic scene with cube in the senter thats it,
-got idea on 
+# Three.js Journey
 
-- THREE.Scene
-- THREE.BoxGeometry
-- THREE.MeshBasicMaterial
-- THREE.Mesh
-- THREE.PerspectiveCamera
-- THREE.WebGLRenderer
-- 
+## we created a webpack Server for three js local development
+## Setup
+Download [Node.js](https://nodejs.org/en/download/).
+Run this followed commands:
+
+``` bash
+# Install dependencies (only the first time)
+npm install
+
+# Run the local server at localhost:8080
+npm run dev
+
+# Build for production in the dist/ directory
+npm run build
+```
