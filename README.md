@@ -3,6 +3,7 @@
 ## we created a webpack Server for three js local development
 
 ## Setup
+
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:
 
@@ -17,4 +18,6 @@ npm run dev
 npm run build
 ```
 
-## learned about position, rotation ,scale, group, axisHelper
+## learned about window.requestAnimationFrame
+
+different way of managing frame rate like using Date.Now(), THREE.Clock() and gsap animation library
