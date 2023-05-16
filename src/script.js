@@ -1,107 +1,93 @@
-import './style.css'
-import * as THREE from 'three'
-import gsap from 'gsap'
+import "./style.css";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 /**
  * Base
  */
 // Canvas
-const canvas = document.querySelector('canvas.webgl')
+const canvas = document.querySelector("canvas.webgl");
+
+// Sizes
+const sizes = {
+  width: 800,
+  height: 600,
+};
+
+// Cursor
+const cursor = {
+  x: 0,
+  y: 0,
+};
+// update mouse courser codenent
+window.addEventListener("mousemove", (event) => {
+  cursor.x = event.clientX / sizes.width - 0.5;
+  cursor.y = -(event.clientY / sizes.height - 0.5);
+});
 
 // Scene
-const scene = new THREE.Scene()
+const scene = new THREE.Scene();
 
-/**
- * Base
- */
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+// Object
+const mesh = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
+  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+);
+scene.add(mesh);
 
-/**
- * Sizes
- */
-const sizes = {
-    width: 800,
-    height: 600
-}
+// Camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100
+);
+// const aspectRatio = sizes.width / sizes.height
+// const camera = new THREE.OrthographicCamera(- 1 * aspectRatio, 1 * aspectRatio, 1, - 1, 0.1, 100)
+camera.position.z = 3;
+scene.add(camera);
 
-/**
- * Camera
- */
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 3
-scene.add(camera)
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
 
-/**
- * Renderer
- */
+// Renderer
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
+  canvas: canvas,
+});
+renderer.setSize(sizes.width, sizes.height);
 
-/**
- * Animate
- */
-//---------------
-// let time =Date.now()
+// Animate
+const clock = new THREE.Clock();
 
-// const tick = () =>
-// {
-//     //time
-//     const currentTime = =Date.now()
-//     const deltaTime = currentTime - time
-//     time = currentTime
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime();
 
-//     //update object
-//     mesh.rotation.y += 002 * deltaTime
-//     // Render
-//     renderer.render(scene, camera)
+  // //update camera position by mouse movement
+  // camera.position.y = cursor.y * 3
+  // camera.position.x = cursor.x * 3
+  // camera.lookAt(mash.position)
 
-//     // Call tick again on the next frame
-//     window.requestAnimationFrame(tick)
-// }
+//   //update camera in a circle
+//   camera.position.y = Math.sin(cursor.y * Math.PI * 2) * 3;
+//   camera.position.x = Math.cos(cursor.x * Math.PI * 2) * 3;
+//   camera.position.y = cursor.y * 5
+//   camera.lookAt(mash.position);
 
-// tick()
-//-------------
-// const clock = new THREE.Clock()
+  //update camera using builtin controls
+  camera.position.y = Math.sin(cursor.y * Math.PI * 2) * 3;
+  camera.position.x = Math.cos(cursor.x * Math.PI * 2) * 3;
+  camera.position.y = cursor.y * 5
+  camera.lookAt(mash.position);
 
-// const tick = () =>
-// {
-//     const elapsTime = clock.getElapsedTime();
+  // Update controls
+  controls.update();
 
-//     //ogject update
-//     // mesh.position.y = elapsTime * Math.PI * 2 // half rotation on each second
+  // Render
+  renderer.render(scene, camera);
 
-//     mesh.position.y = Math.sin(elapsTime)
-//     mesh.position.y = Math.cos(elapsTime)
+  // Call tick again on the next frame
+  window.requestAnimationFrame(tick);
+};
 
-//     camera.position.y = Math.cos(elapsTime)
-//     camera.position.y = Math.sin(elapsTime)
-//     camera.lookAt(mesh.position)
-//     // Render
-//     renderer.render(scene, camera)
-
-//     // Call tick again on the next frame
-//     window.requestAnimationFrame(tick)
-// }
-
-// tick()
-//--------------
-gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
-gsap.to(mesh.position, { duration: 1, delay: 1, y:1 })
-gsap.to(mesh.position, { duration: 1, delay: 1, x: -2 })
-//gsap.to(mesh.position, { duration: 1, delay: 1, y: -1 })
-
-const tick = () =>
-{
-    // Render
-    renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
-}
-
-tick()
+tick();
