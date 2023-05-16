@@ -18,76 +18,62 @@ npm run dev
 npm run build
 ```
 
-## learned about fullscreen and resizing window
+## learned about geometries
 
-update  canvas size, when we change our browser window
+<br /><img width="900" alt="Spoke" src="./docs-img/10.png"><br/>
+<br /><img width="900" alt="Spoke" src="./docs-img/11.png"><br/>
+<br /><img width="900" alt="Spoke" src="./docs-img/12.png"><br/>
+
+checking what geometries exist in library
+
+- [BoxGeometry](https://threejs.org/docs/api/en/geometries/BoxGeometry.html)
+  <br /><img width="900" alt="Spoke" src="./docs-img/13.png"><br/>
+  <br /><img width="900" alt="Spoke" src="./docs-img/14.png"><br/><br/>
+- [CapsuleGeometry](https://threejs.org/docs/api/en/geometries/CapsuleGeometry.html)
+- [CircleGeometry](https://threejs.org/docs/api/en/geometries/CircleGeometry.html)
+- [ConeGeometry](https://threejs.org/docs/api/en/geometries/ConeGeometry.html)
+- [CylinderGeometry](https://threejs.org/docs/api/en/geometries/CylinderGeometry.html)
+- [DodecahedronGeometry](BoxGeometry)
+- [EdgesGeometry](https://threejs.org/docs/api/en/geometries/EdgesGeometry.html)
+- [ExtrudeGeometry](https://threejs.org/docs/api/en/geometries/ExtrudeGeometry.html)
+- [IcosahedronGeometry](https://threejs.org/docs/api/en/geometries/IcosahedronGeometry.html)
+- [LatheGeometry](https://threejs.org/docs/api/en/geometries/LatheGeometry.html)
+- [OctahedronGeometry](https://threejs.org/docs/api/en/geometries/OctahedronGeometry.html)
+- [PlaneGeometry](https://threejs.org/docs/api/en/geometries/PlaneGeometry.html)
+- [PolyhedronGeometry](https://threejs.org/docs/api/en/geometries/PolyhedronGeometry.html)
+- [RingGeometry](https://threejs.org/docs/api/en/geometries/RingGeometry.html)
+- [ShapeGeometry](https://threejs.org/docs/api/en/geometries/ShapeGeometry.html)
+- [SphereGeometry](https://threejs.org/docs/api/en/geometries/SphereGeometry.html)
+- [TetrahedronGeometry](https://threejs.org/docs/api/en/geometries/TetrahedronGeometry.html)
+- [TorusGeometry](https://threejs.org/docs/api/en/geometries/TorusGeometry.html)
+- [TorusKnotGeometry](https://threejs.org/docs/api/en/geometries/TorusKnotGeometry.html)
+- [TubeGeometry](https://threejs.org/docs/api/en/geometries/TubeGeometry.html)
+- [WireframeGeometry](https://threejs.org/docs/api/en/geometries/WireframeGeometry.html)
+
 
 ```js
+......
 /**
- * Sizes
+ * Object
  */
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
-// update  canvas size, when we change our browser window
-window.addEventListener("resize", () => {
-  // Update sizes
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
 
-  // Update camera
-  camera.aspect = sizes.width / sizes.height;
-  camera.updateProjectionMatrix();
-
-  // Update renderer
-  renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-});
-```
-
-enable full screen on double tab
-
-```js
-/**
- * Fullscreen
- */
-window.addEventListener('dblclick', () =>
+const geometry = new THREE.BufferGeometry()
+const count = 50
+const positionsArray = new Float32Array(count * 3 * 3)
+for(let i = 0; i < count * 3 * 3; i++)
 {
-    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+    positionsArray[i] = (Math.random() - 0.5) * 4
+}
+const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3)
+geometry.setAttribute('position', positionsAttribute)
 
-    if(!fullscreenElement)
-    {
-        if(canvas.requestFullscreen)
-        {
-            canvas.requestFullscreen()
-        }
-        else if(canvas.webkitRequestFullscreen)
-        {
-            canvas.webkitRequestFullscreen()
-        }
-    }
-    else
-    {
-        if(document.exitFullscreen)
-        {
-            document.exitFullscreen()
-        }
-        else if(document.webkitExitFullscreen)
-        {
-            document.webkitExitFullscreen()
-        }
-    }
-})
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+
+const mesh = new THREE.Mesh(geometry, material)
+scene.add(mesh)
+....
+
 ```
 
-## new thing we learn
-
-- update canvas size using `renderer.setSize(sizes.width, sizes.height)`
-- camera.updateProjectionMatrix()<br /><img width="900" alt="Spoke" src="./docs-img/7.png"><br /><br />
-- resize addEventListener
-- window.devicePixelRatio is used to get the current pixel Ratio
-    <br /><img width="900" alt="Spoke" src="./docs-img/8.png">
-    <br /><img width="900" alt="Spoke" src="./docs-img/9.png"><br /><br />
-- document.fullscreenElement
-
+created this
+<br /><img width="900" alt="Spoke" src="./docs-img/15.png"><br/>
