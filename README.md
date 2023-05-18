@@ -104,7 +104,7 @@ https://marmoset.co/posts/basic-theory-of-physically-based-rendering/
     const alphaTexture = textureLoader.load("/textures/door/alpha.jpg");
     ```
 
-  - We can use belo colback to debug texture Loader issue
+  - We can use bellow callback to debug texture Loader issue
 
     ```js
     const textureLoader = new THREE.TextureLoader(loadingManager);

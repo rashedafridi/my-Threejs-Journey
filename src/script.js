@@ -17,7 +17,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 //     texture.needsUpdate = true // texture will bee updated because of this command
 // })
 // image.src = '/textures/door/alpha.jpg'
-
+// /**
+//  * Object
+//  */
+// const geometry = new THREE.BoxGeometry(1, 1, 1)
+// console.log(geometry.attributes)
+// const material = new THREE.MeshBasicMaterial({ map: texture })
+// const mesh = new THREE.Mesh(geometry, material)
+// scene.add(mesh)
 /**
  * Base
  */
@@ -92,6 +99,7 @@ const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 console.log(geometry.attributes)
+console.log(geometry.attributes.uv)
 const material = new THREE.MeshBasicMaterial({ map: colorTexture })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
