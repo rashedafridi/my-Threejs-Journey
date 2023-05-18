@@ -18,197 +18,253 @@ npm run dev
 npm run build
 ```
 
-## learned about [Texture](https://threejs.org/docs/#api/en/textures/Texture)
+## learned about [Materials](https://threejs.org/docs/#api/en/materials/Material)
 
-- color (or Albedon) Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/19.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="static\textures\door\color.jpg"><br/>
-- Alpha Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/20.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="./static\textures\door\alpha.jpg"><br/>
-- Height (or Displacement) Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/21.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="./static/textures/door/height.jpg"><br>
-- Normal Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/22.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="./static/textures/door/normal.jpg"><br>
-- Ambient Occlusion Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/23.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="./static/textures/door/ambientOcclusion.jpg"><br>
-- Meatless Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/24.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="./static/textures/door/metalness.jpg"><br>
-- Roughness Texture
-  - <br /><img width="900" alt="Spoke" src="./docs-img/25.png"><br/>
-  - EX: <br /><img width="900" alt="Spoke" src="./static/textures/door/roughness.jpg"><br>
+<br /><img width="900" alt="Spoke" src="./docs-img/19.png"><br/>
 
-Above are the most used type of Texture and those follow PBR
+### creat a base scene with 3 moving object
 
-What is PBR
-<br /><img width="900" alt="Spoke" src="./docs-img/26.png"><br>
+```js
+....
 
-blog link regarding this
+const material = new THREE.MeshBasicMaterial({color: 0x00f0f0})
 
-https://marmoset.co/posts/physically-based-rendering-and-you-can-too/
+const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(0.5, 64, 64),
+    material
+)
+sphere.position.x = - 1.5
 
-https://marmoset.co/posts/basic-theory-of-physically-based-rendering/
+const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1, 100, 100),
+    material
+)
 
-## How to Load Textures
+const torus = new THREE.Mesh(
+    new THREE.TorusGeometry(0.3, 0.2, 64, 128),
+    material
+)
+torus.position.x = 1.5
+scene.add(sphere, plane, torus)
 
-- Loading image (This process will work for our webpack setup)
+/**
+ * Sizes
+ */
+const sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight
+}
 
-  - We will put all of our image in our `static` folder
-  - in ths case we can access our resource like
+window.addEventListener('resize', () =>
+{
+    // Update sizes
+    sizes.width = window.innerWidth
+    sizes.height = window.innerHeight
 
+    // Update camera
+    camera.aspect = sizes.width / sizes.height
+    camera.updateProjectionMatrix()
+
+    // Update renderer
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+/**
+ * Camera
+ */
+// Base camera
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+camera.position.x = 1
+camera.position.y = 1
+camera.position.z = 2
+scene.add(camera)
+
+// Controls
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+
+/**
+ * Renderer
+ */
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas
+})
+renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+/**
+ * Animate
+ */
+const clock = new THREE.Clock()
+
+const tick = () =>
+{
+    const elapsedTime = clock.getElapsedTime()
+
+    // Update objects
+    sphere.rotation.y = 0.1 * elapsedTime
+    plane.rotation.y = 0.1 * elapsedTime
+    torus.rotation.y = 0.1 * elapsedTime
+
+    sphere.rotation.x = 0.15 * elapsedTime
+    plane.rotation.x = 0.15 * elapsedTime
+    torus.rotation.x = 0.15 * elapsedTime
+
+    // Update controls
+    controls.update()
+
+    // Render
+    renderer.render(scene, camera)
+
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+}
+
+tick()
+```
+
+### now lode all the material with TextureLoader to test those
+
+```js
+// Textures
+const textureLoader = new THREE.TextureLoader();
+
+const doorColorTexture = textureLoader.load("/textures/door/color.jpg");
+const doorAlphaTexture = textureLoader.load("/textures/door/alpha.jpg");
+const doorAmbientOcclusionTexture = textureLoader.load(
+  "/textures/door/ambientOcclusion.jpg"
+);
+const doorHeightTexture = textureLoader.load("/textures/door/height.jpg");
+const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
+const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
+const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
+const matcapTexture = textureLoader.load("/textures/matcaps/8.png");
+const gradientTexture = textureLoader.load("/textures/gradients/5.jpg"); // Textures
+const textureLoader = new THREE.TextureLoader();
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+
+const doorColorTexture = textureLoader.load("/textures/door/color.jpg");
+const doorAlphaTexture = textureLoader.load("/textures/door/alpha.jpg");
+const doorAmbientOcclusionTexture = textureLoader.load(
+  "/textures/door/ambientOcclusion.jpg"
+);
+const doorHeightTexture = textureLoader.load("/textures/door/height.jpg");
+const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
+const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
+const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
+const matcapTexture = textureLoader.load("/textures/matcaps/8.png");
+const gradientTexture = textureLoader.load("/textures/gradients/5.jpg");
+```
+
+### we are go na check some mash bash material
+
+- [MeshBasicMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshBasicMaterial)
+
+  - <br /><img width="900" alt="Spoke" src="./docs-img/55.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/56.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/57.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/58.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/59.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/60.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/61.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/62.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/63.png"><br/>
+    <br /><img width="900" alt="Spoke" src="./docs-img/64.png"><br/>
+
+  ```js
+  const material = new THREE.MeshBasicMaterial();
+  material.map = doorColorTexture;
+  // material.color.set('#FF00FF')
+  // material.wireframe = true
+
+  // material.opacity = 0.5
+  material.transparent = true;
+  // material.alphaMap = doorAlphaTexture
+  // material.side = THREE.DoubleSide
+  ```
+
+- [MeshNormalMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshNormalMaterial)
+  - <br /><img width="900" alt="Spoke" src="./docs-img/65.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/66.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/67.png"><br/>
+    <br /><img width="900" alt="Spoke" src="./docs-img/68.png"><br/>
+- [MeshMatcapMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshMatcapMaterial)
+  - <br /><img width="900" alt="Spoke" src="./docs-img/69.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/70.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/71.png"><br/>
+    <br /><img width="900" alt="Spoke" src="./docs-img/72.png"><br/>
+- [MeshDepthMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshDepthMaterial)
+  <br /><img width="900" alt="Spoke" src="./docs-img/73.png"><br/>
+- [MeshLambertMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshLambertMaterial)
+
+  - <br /><img width="900" alt="Spoke" src="./docs-img/74.png"><br/>
+    <br /><img width="900" alt="Spoke" src="./docs-img/75.png"><br/>
+
+- [MeshPhongMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshPhongMaterial)
+  - <br /><img width="900" alt="Spoke" src="./docs-img/76.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/77.png"><br/>
+    <br /><img width="900" alt="Spoke" src="./docs-img/78.png"><br/>
+- [MeshToonMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshToonMaterial)
+  - <br /><img width="900" alt="Spoke" src="./docs-img/79.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/80.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/81.png"><br/>
+- [MeshStandardMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshStandardMaterial)
+
+  - <br /><img width="900" alt="Spoke" src="./docs-img/82.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/83.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/84.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/85.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/86.png"><br/>
+
+    <img width="900" alt="Spoke" src="./docs-img/87.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/88.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/89.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/90.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/91.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/92.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/93.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/94.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/95.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/96.png"><br/>
+
+  - code
     ```js
-    const imgSource = "/image.pmg";
-    console.log(imgSource);
+    const material = new THREE.MeshStandardMaterial();
+    // material.metalness = 0
+    // material.roughness = 1
+    material.map = doorColorTexture;
+    material.aoMap = doorAmbientOcclusionTexture;
+    material.aoMapIntensity = 1;
+    material.displacementMap = doorHeightTexture;
+    material.displacementScale = 0.05;
+    material.metalnessMap = doorMetalnessTexture;
+    material.roughnessMap = doorRoughnessTexture;
+    material.normalMap = doorNormalTexture;
+    material.normalScale.set(0.5, 0.5);
+    material.transparent = true;
+    material.alphaMap = doorAlphaTexture;
+
+    gui.add(material, "metalness").min(0).max(1).step(0.0001);
+    gui.add(material, "aoMapIntensity").min(0).max(10).step(0.0001);
+    gui.add(material, "displacementScale").min(0).max(10).step(0.0001);
+    gui.add(material, "roughness").min(0).max(1).step(0.0001);
+    gui.add(material, "wireframe");
+    gui.add(material, "transparent");
     ```
+- [MeshPhysicalMaterial](https://threejs.org/docs/?q=material#api/en/materials/MeshPhysicalMaterial)
+  - <br /><img width="900" alt="Spoke" src="./docs-img/97.png"><br/>
+- [PointsMaterial](https://threejs.org/docs/?q=material#api/en/materials/PointsMaterial)
+- <br /><img width="900" alt="Spoke" src="./docs-img/99.png"><br/>
 
-  - load image
+  - <br /><img width="900" alt="Spoke" src="./docs-img/100.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/101.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/102.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/103.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/104.png"><br/>
 
-    ```js
-    const image = new Image();
-    image.onload(() => {
-      console.log("image loader");
-    });
-    image.src = "/textures/door/alpha.jpg";
-    ```
+    <img width="900" alt="Spoke" src="./docs-img/105.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/106.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/107.png"><br/>
+    <img width="900" alt="Spoke" src="./docs-img/108.png"><br/>
 
-  - load image texture
-
-    ```js
-    /** load image texture*/
-
-    const image = new Image();
-    const texture = new THREE.Texture(image);
-    image.onload(() => {
-      console.log("image loader");
-      texture.needsUpdate = true; // texture will bee updated because of this command
-    });
-    image.src = "/textures/door/alpha.jpg";
-    /**
-     * Object
-     */
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    console.log(geometry.attributes);
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-    ```
-
-  - Use texture Loader
-
-    ```js
-    const textureLoader = new THREE.TextureLoader();
-    const alphaTexture = textureLoader.load("/textures/door/alpha.jpg");
-    ```
-
-  - We can use bellow callback to debug texture Loader issue
-
-    ```js
-    const textureLoader = new THREE.TextureLoader(loadingManager);
-    const colorTexture = textureLoader.load(
-      "/textures/minecraft.png",
-      () => {
-        console.log("textureLoader: loading finished");
-      },
-      () => {
-        console.log("textureLoader: loading progressing");
-      },
-      () => {
-        console.log("textureLoader: loading error");
-      }
-    );
-    ```
-
-  - how to use loadingManager, it can be use to manage different type of loader
-
-    ```js
-    const loadingManager = new THREE.LoadingManager();
-    loadingManager.onStart = () => {
-      console.log("loadingManager: loading started");
-    };
-    loadingManager.onLoad = () => {
-      console.log("loadingManager: loading finished");
-    };
-    loadingManager.onProgress = () => {
-      console.log("loadingManager: loading progressing");
-    };
-    loadingManager.onError = () => {
-      console.log("loadingManager: loading error");
-    };
-    const textureLoader = new THREE.TextureLoader(loadingManager);
-    const colorTexture = textureLoader.load("/textures/minecraft.png");
-    ```
-
-## UV unwrapping
-
-It defines how the texture is rapping the Geometry
-
-<br /><img width="900" alt="Spoke" src="./docs-img/26.png"><br/>
-
-visual example:-
-
-<br /><img width="900" alt="Spoke" src="./docs-img/27.png"><br/>
-<br /><img width="900" alt="Spoke" src="./docs-img/29.png"><br/>
-
-you can check uv object by logging `console.log(geometry.attributes.uv)`
-
-<br /><img width="900" alt="Spoke" src="./docs-img/30.png"><br/>
-
-## Reansforming The Texture
-
-you can check generateMipmaps, offset, repeat and soon in the video to get batter idea `time stamp  00:40:20 -  00:29:40`
-
-- repeat
-
-  - <br /><img width="900" alt="Spoke" src="./docs-img/31.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/32.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/33.png"><br/>
-
-- OffSet
-
-  - <br /><img width="900" alt="Spoke" src="./docs-img/34.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/35.png"><br/>
-
-- repeat and OffSet
-  - <br /><img width="900" alt="Spoke" src="./docs-img/36.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/37.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/38.png"><br/>
-
-## Filtering and Mip-maping
-
-time stamp 00:29:40 - 1:02:00
-
-<br /><img width="900" alt="Spoke" src="./docs-img/39.png"><br/>
-
-<br /><img width="900" alt="Spoke" src="./docs-img/40.png"><br/>
-<br /><img width="900" alt="Spoke" src="./docs-img/41.png"><br/>
-
-Minafication Filter
-
-- <br /><img width="900" alt="Spoke" src="./docs-img/42.png"><br/>
-- <br /><img width="900" alt="Spoke" src="./docs-img/43.png"><br/>
-- <br /><img width="900" alt="Spoke" src="./docs-img/44.png"><br/>
-
-Texcher ForMate And Optimization
-
-<br /><img width="900" alt="Spoke" src="./docs-img/45.png"><br/>
-
-- Wight
-  - <br /><img width="900" alt="Spoke" src="./docs-img/46.png"><br/>
-- the size
-  - <br /><img width="900" alt="Spoke" src="./docs-img/47.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/48.png"><br/>
-- data
-
-  - <br /><img width="900" alt="Spoke" src="./docs-img/49.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/50.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/51.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/52.png"><br/>
-  - <br /><img width="900" alt="Spoke" src="./docs-img/53.png"><br/>
-
-Where to find texture
-
-- <br /><img width="900" alt="Spoke" src="./docs-img/54.png"><br/>
