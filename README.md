@@ -18,78 +18,85 @@ npm run dev
 npm run build
 ```
 
-## learned about [Light](https://threejs.org/docs/index.html?q=light#)
+## learned about [Shadows](https://threejs.org/docs/index.html?q=shadow#api/en/lights/shadows/LightShadow)
 
 check the code
 
-<img width="900" alt="Spoke" src="./docs-img/137.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/165.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/167.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/168.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/169.png"><br/>
 
+example: [click to see 'webgl_shadowmap_viewer'](https://threejs.org/examples/?q=shadow#webgl_shadowmap_viewer)
 
-## different Type of light
-
-- [AmbientLight](https://threejs.org/docs/index.html?q=light#api/en/lights/AmbientLight)
-    - <img width="900" alt="Spoke" src="./docs-img/136.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/138.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/139.png"><br/>
-- [DirectionalLight](https://threejs.org/docs/index.html?q=light#api/en/lights/DirectionalLight)
-    - <img width="900" alt="Spoke" src="./docs-img/140.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/141.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/142.png"><br/>
-- [HemisphereLight](https://threejs.org/docs/index.html?q=light#api/en/lights/HemisphereLight)
-    - <img width="900" alt="Spoke" src="./docs-img/143.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/144.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/145.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/146.png"><br/>
-
-- [PointLight](https://threejs.org/docs/index.html?q=light#api/en/lights/PointLight)
-    - <img width="900" alt="Spoke" src="./docs-img/147.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/148.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/149.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/150.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/151.png"><br/>
-- [RectAreaLight](https://threejs.org/docs/index.html?q=light#api/en/lights/RectAreaLight)
-    - <img width="900" alt="Spoke" src="./docs-img/152.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/153.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/154.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/155.png"><br/>
-- [SpotLight](https://threejs.org/docs/index.html?q=light#api/en/lights/SpotLight)
-    - <img width="900" alt="Spoke" src="./docs-img/156.png"><br/>
-    - <img width="900" alt="Spoke" src="./docs-img/157.png"><br/>
+we have below item present on the default scene
+<br/><img width="900" alt="Spoke" src="./docs-img/170.png"><br/>
 
 
 
-<img width="900" alt="Spoke" src="./docs-img/158.png"><br/>
-<img width="900" alt="Spoke" src="./docs-img/159.png"><br/>
-<img width="900" alt="Spoke" src="./docs-img/161.png"><br/>
-<img width="900" alt="Spoke" src="./docs-img/164.png"><br/>
+## How to Activate Shadow Map
+
+<img width="900" alt="Spoke" src="./docs-img/171.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/172.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/173.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/174.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/175.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/176.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/177.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/178.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/179.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/180.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/181.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/182.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/183.png"><br/>
+
+
+
+<br/><img width="900" alt="Spoke" src="./docs-img/184.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/185.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/186.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/187.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/188.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/189.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/190.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/191.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/192.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/194.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/195.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/196.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/197.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/198.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/199.png"><br/>
+
+<img width="900" alt="Spoke" src="./docs-img/200.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/201.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/202.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/203.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/204.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/205.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/206.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/207.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/208.png"><br/>
 
 
 
 
-Baking 
 
-- <img width="900" alt="Spoke" src="./docs-img/162.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/209.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/210.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/211.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/212.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/213.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/214.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/215.png"><br/>
 
-<br/><img width="900" alt="Spoke" src="./docs-img/163.png"><br/>
 
-```js
-// Helpers
-const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 0.2)
-scene.add(hemisphereLightHelper)
 
-const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2)
-scene.add(directionalLightHelper)
-
-const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2)
-scene.add(pointLightHelper)
-
-const spotLightHelper = new THREE.SpotLightHelper(spotLight)
-scene.add(spotLightHelper)
-window.requestAnimationFrame(() =>
-{
-    spotLightHelper.update()
-})
-
-const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight)
-scene.add(rectAreaLightHelper)
-```
+<img width="900" alt="Spoke" src="./docs-img/216.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/217.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/218.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/219.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/220.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/221.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/222.png"><br/>
+<img width="900" alt="Spoke" src="./docs-img/223.png"><br/>
