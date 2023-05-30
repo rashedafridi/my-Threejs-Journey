@@ -276,7 +276,7 @@ ghosts[3].shadow.camera.far = 7;
 scene.add(...ghosts);
 
 const fog = new THREE.Fog('#262837', 1, 15)
-// scene.fog = fog
+scene.fog = fog
 
 /**
  * Sizes

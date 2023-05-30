@@ -21,3 +21,4 @@ npm run build
 ## learned about [Shadows, light](https://threejs.org/docs/index.html?q=shadow#api/en/lights/shadows/LightShadow)
 
 check the code
+![Haunted House](./docs-img/224.png)
