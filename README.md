@@ -18,5 +18,7 @@ npm run dev
 npm run build
 ```
 
-## learned about [Particles](https://threejs.org/docs/index.html?q=Points#api/en/objects/Points)
+## learned about [Raycaster](https://threejs.org/docs/#api/en/core/Raycaster)
+
+
 check the code
