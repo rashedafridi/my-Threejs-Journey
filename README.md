@@ -18,7 +18,7 @@ npm run dev
 npm run build
 ```
 
-## learned about [Raycaster](https://threejs.org/docs/#api/en/core/Raycaster)
+## learned about [Scroll Based Animation](https://threejs.org/docs)
 
 
 check the code
