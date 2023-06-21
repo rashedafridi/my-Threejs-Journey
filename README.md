@@ -18,7 +18,7 @@ npm run dev
 npm run build
 ```
 
-## learned about [Scroll Based Animation](https://threejs.org/docs)
+## learned about [GLTFLoader](https://threejs.org/docs/#examples/en/loaders/GLTFLoader)
 
 
 check the code
