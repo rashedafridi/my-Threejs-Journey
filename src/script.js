@@ -1,9 +1,9 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import * as dat from 'lil-gui'
 
 /**
  * Base
@@ -27,49 +27,20 @@ const gltfLoader = new GLTFLoader()
 gltfLoader.setDRACOLoader(dracoLoader)
 
 let mixer = null
-let animationList = null
-const debugObject = {
-    OldAction:null,
-    loopIndex:0,
-    loopLength: 0,
-    loopAnimation: function() {
-        this.OldAction.stop()
-        const action = mixer.clipAction(animationList[this.loopIndex])
-        action.play()
-        this.OldAction = action
-        if(this.loopIndex + 1 < this.loopLength){
-            this.loopIndex += 1
-        }else {
-            this.loopIndex = 0 
-        }
-        console.log("this",this);
-        
-    }
-}
+
 gltfLoader.load(
-    '/models/Fox/glTF/Fox.gltf',
+    '/models/hamburger.glb',
     (gltf) =>
     {
-        gltf.scene.scale.set(0.025, 0.025, 0.025)
         scene.add(gltf.scene)
-
-        // Animation
-        mixer = new THREE.AnimationMixer(gltf.scene)
-        const action = mixer.clipAction(gltf.animations[0])
-        animationList = gltf.animations;
-        debugObject.loopLength = gltf.animations.length;
-        debugObject.OldAction = action;
-        action.play()
-        console.log("animationList",{animationList,g:gltf.animations });
     }
 )
-gui.add(debugObject, 'loopAnimation')
 
 /**
  * Floor
  */
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(10, 10),
+    new THREE.PlaneGeometry(50, 50),
     new THREE.MeshStandardMaterial({
         color: '#444444',
         metalness: 0,
@@ -94,7 +65,7 @@ directionalLight.shadow.camera.left = - 7
 directionalLight.shadow.camera.top = 7
 directionalLight.shadow.camera.right = 7
 directionalLight.shadow.camera.bottom = - 7
-directionalLight.position.set(- 5, 5, 0)
+directionalLight.position.set(5, 5, 5)
 scene.add(directionalLight)
 
 /**
@@ -125,12 +96,12 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(2, 2, 2)
+camera.position.set(- 8, 4, 8)
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.target.set(0, 0.75, 0)
+controls.target.set(0, 1, 0)
 controls.enableDamping = true
 
 /**
@@ -156,7 +127,6 @@ const tick = () =>
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
 
-    // Model animation
     if(mixer)
     {
         mixer.update(deltaTime)
